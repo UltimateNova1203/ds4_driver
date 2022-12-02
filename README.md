@@ -6,6 +6,7 @@ Basic HIDAPI driver skeleton for a DualShock 4 controller in C/C++. Can auto-enu
 * Touchpad + L2/R2: Ramp Rumble
 * Touchpad + Up/Down: Adjust LED On Time
 * Touchpad + Left/Right: Adjust LED Off Time
+* CTRL + C to close the device
  
 ## Supported devices:
 * Sony DualShock 4 (v1)
