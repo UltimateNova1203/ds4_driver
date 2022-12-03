@@ -41,5 +41,8 @@
     <ClInclude Include="include\hidapi\hidapi_hidsdi.h">
       <Filter>Header Files\hidapi</Filter>
     </ClInclude>
+    <ClInclude Include="include\ds4_driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

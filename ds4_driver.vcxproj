@@ -23,6 +23,7 @@
     <ClCompile Include="source\hid.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ds4_driver.h" />
     <ClInclude Include="include\hidapi\hidapi.h" />
     <ClInclude Include="include\hidapi\hidapi_cfgmgr32.h" />
     <ClInclude Include="include\hidapi\hidapi_hidclass.h" />
@@ -102,6 +103,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\hidapi</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4700</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
