@@ -13,7 +13,7 @@ const wchar_t *hidError;
 hid_device_info* hidDevice = hid_enumerate(0x054C, 0);
 hid_device* hidHandle = hid_open(hidDevice->vendor_id, hidDevice->product_id, hidDevice->serial_number);
 
-UCHAR inputBuffer[63];
+UCHAR inputBuffer[100];
 UCHAR outputBuffer[80];
 SHORT DS4_PID = 0;
 BOOL ds4IsPresent = false;
@@ -174,7 +174,7 @@ void DS4Enumeration() {
         printf("HID Enumerate: DS4 v2\n");
         hidDevice = hid_enumerate(0x054C, 0x09CC);
         DS4_PID = 0x09CC;
-        Sleep(1000);
+        Sleep(250);
 
         if (hidDevice == NULL) {
             printf("Couldn't get DS4 v2\n");
@@ -182,7 +182,7 @@ void DS4Enumeration() {
             printf("HID Enumerate: Wireless Adapter\n");
             hidDevice = hid_enumerate(0x054C, 0x0BA0);
             DS4_PID = 0x0BA0;
-            Sleep(1000);
+            Sleep(250);
 
             if (hidDevice == NULL) {
                 printf("Couldn't get Wireless Adapter\n");
@@ -190,11 +190,11 @@ void DS4Enumeration() {
                 printf("HID Enumerate: Bluetooth\n");
                 hidDevice = hid_enumerate(0x054C, 0x08C1);
                 DS4_PID = 0x08C1;
-                Sleep(1000);
+                Sleep(250);
 
                 if (hidDevice == NULL) {
                     printf("Couldn't get Bluetooth\n");
-                    Sleep(1000);
+                    Sleep(250);
                 }
             }
         }
@@ -243,7 +243,7 @@ void DS4Presence(hid_device* hidHandle) {
 void DS4GetStateUSB(hid_device* hidHandle) {
     memset(inputBuffer, 0, 31);
     hidHandle = hid_open(0x54C, DS4_PID, NULL);
-    hid_read(hidHandle, inputBuffer, 63);
+    hid_read(hidHandle, inputBuffer, 100);
 
     ds4Cross = inputBuffer[5] >> 5 & 0x1;
     ds4Circle = inputBuffer[5] >> 6 & 0x1;
@@ -360,7 +360,7 @@ void DS4SetStateUSB(hid_device* hidHandle) {
     memset(outputBuffer, 0, 80);
 
     outputBuffer[0] = 0x05;
-    outputBuffer[1] = 0xF7; // F0 Nothing, F3 Rumble, F7 Rumble + LED
+    outputBuffer[1] = 0xFF; // F0 Nothing, F3 Rumble, F7 Rumble + LED
     outputBuffer[2] = 0x04;
     outputBuffer[3] = 0x00;
     outputBuffer[4] = ds4RightMotor; // Right / Weak
@@ -450,6 +450,19 @@ int main() {
 
         DS4GetState(hidHandle);
 
+        /*printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[0], inputBuffer[1], inputBuffer[2], inputBuffer[3], inputBuffer[4], inputBuffer[5], inputBuffer[6], inputBuffer[7]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[8], inputBuffer[9], inputBuffer[10], inputBuffer[11], inputBuffer[12], inputBuffer[13], inputBuffer[14], inputBuffer[15]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[16], inputBuffer[17], inputBuffer[18], inputBuffer[19], inputBuffer[20], inputBuffer[21], inputBuffer[22], inputBuffer[23]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[24], inputBuffer[25], inputBuffer[26], inputBuffer[27], inputBuffer[28], inputBuffer[29], inputBuffer[30], inputBuffer[31]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[32], inputBuffer[33], inputBuffer[34], inputBuffer[35], inputBuffer[36], inputBuffer[37], inputBuffer[38], inputBuffer[39]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[40], inputBuffer[41], inputBuffer[42], inputBuffer[43], inputBuffer[44], inputBuffer[45], inputBuffer[46], inputBuffer[47]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[48], inputBuffer[49], inputBuffer[50], inputBuffer[51], inputBuffer[52], inputBuffer[53], inputBuffer[54], inputBuffer[55]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[56], inputBuffer[57], inputBuffer[58], inputBuffer[59], inputBuffer[60], inputBuffer[61], inputBuffer[62], inputBuffer[63]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[64], inputBuffer[65], inputBuffer[66], inputBuffer[67], inputBuffer[68], inputBuffer[69], inputBuffer[70], inputBuffer[71]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[72], inputBuffer[73], inputBuffer[74], inputBuffer[75], inputBuffer[76], inputBuffer[77], inputBuffer[78], inputBuffer[79]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[80], inputBuffer[81], inputBuffer[82], inputBuffer[83], inputBuffer[84], inputBuffer[85], inputBuffer[86], inputBuffer[87]);
+        printf("%02X %02X %02X %02X %02X %02X %02X %02X\n\n", inputBuffer[88], inputBuffer[89], inputBuffer[90], inputBuffer[91], inputBuffer[92], inputBuffer[93], inputBuffer[94], inputBuffer[95]);*/
+
         printf("Sticks:\n");
         printf("|  LX: %3d  |  LY: %3d  |  L3: %01d\n", ds4LeftStickX, ds4LeftStickY, ds4L3);
         printf("|  RX: %3d  |  RY: %3d  |  R3: %01d\n\n", ds4RightStickX, ds4RightStickY, ds4R3);
@@ -516,6 +529,8 @@ int main() {
         }
 
         DS4SetState(hidHandle);
+
+        Sleep(33);
     }
 
     DS4CloseState(hidHandle);
