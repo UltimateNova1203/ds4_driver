@@ -16,6 +16,9 @@
     <Filter Include="Header Files\hidapi">
       <UniqueIdentifier>{a703afee-0f07-4726-8eb3-e707bd3b0de6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\JoyShockLibrary">
+      <UniqueIdentifier>{bac424c9-4dce-46a2-9c1f-f96cc38aea11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ds4_driver.cpp">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="include\ds4_driver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\JoyShockLibrary\JoyShockLibrary.h">
+      <Filter>Header Files\JoyShockLibrary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

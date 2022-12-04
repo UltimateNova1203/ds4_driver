@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 extern BOOL ds4IsPresent;
 
@@ -39,13 +38,6 @@ extern BYTE ds4R2Pressure;
 extern BYTE ds4LeftMotor;
 extern BYTE ds4RightMotor;
 
-// Lightbar
-extern BYTE ds4LightRed;
-extern BYTE ds4LightGreen;
-extern BYTE ds4LightBlue;
-extern BYTE ds4LightOn;
-extern BYTE ds4LightOff;
-
 // Acceleration
 extern SHORT ds4AccelX;
 extern SHORT ds4AccelY;
@@ -55,3 +47,14 @@ extern SHORT ds4AccelZ;
 extern SHORT ds4GyroX;
 extern SHORT ds4GyroY;
 extern SHORT ds4GyroZ;
+
+typedef struct _DS4_LIGHTBAR {
+    BYTE Red = 0;
+    BYTE Green = 0;
+    BYTE Blue = 0;
+} DS4_LIGHTBAR;
+
+typedef struct _DS4_VIBRATION {
+    BYTE Strong = 0;
+    BYTE Weak = 0;
+} DS4_VIBRATION;
